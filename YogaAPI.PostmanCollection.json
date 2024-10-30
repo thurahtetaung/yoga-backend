@@ -1,0 +1,90 @@
+{
+  "info": {
+      "name": "Universal Yoga API",
+      "description": "API endpoints for Universal Yoga data synchronization",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+      {
+          "name": "Upload Data",
+          "request": {
+              "method": "POST",
+              "header": [
+                  {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                  }
+              ],
+              "url": {
+                  "raw": "http://localhost:3000/api/sync/upload",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "sync", "upload"]
+              },
+              "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"courses\": [\n        {\n            \"id\": 1,\n            \"type\": \"Flow Yoga\",\n            \"dayOfWeek\": \"Monday\",\n            \"timeOfDay\": \"10:00 AM\",\n            \"duration\": 60,\n            \"capacity\": 20,\n            \"price\": 15.00,\n            \"description\": \"Beginner friendly flow yoga class\"\n        }\n    ],\n    \"classes\": [\n        {\n            \"id\": 1,\n            \"courseId\": 1,\n            \"date\": \"October 30, 2024\",\n            \"teacher\": \"Sarah Johnson\",\n            \"comments\": \"Regular session\"\n        }\n    ]\n}"
+              }
+          }
+      },
+      {
+          "name": "Download Data",
+          "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                  "raw": "http://localhost:3000/api/sync/download",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "sync", "download"],
+                  "query": [
+                      {
+                          "key": "lastSync",
+                          "value": "1970-01-01 00:00:00",
+                          "description": "Optional: Last sync timestamp"
+                      }
+                  ]
+              }
+          }
+      },
+      {
+          "name": "Delete All Data",
+          "request": {
+              "method": "POST",
+              "header": [],
+              "url": {
+                  "raw": "http://localhost:3000/api/sync/delete-all",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "sync", "delete-all"]
+              }
+          }
+      },
+      {
+          "name": "Upload Multiple Classes",
+          "request": {
+              "method": "POST",
+              "header": [
+                  {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                  }
+              ],
+              "url": {
+                  "raw": "http://localhost:3000/api/sync/upload",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "sync", "upload"]
+              },
+              "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"courses\": [\n        {\n            \"id\": 1,\n            \"type\": \"Flow Yoga\",\n            \"dayOfWeek\": \"Monday\",\n            \"timeOfDay\": \"10:00 AM\",\n            \"duration\": 60,\n            \"capacity\": 20,\n            \"price\": 15.00,\n            \"description\": \"Beginner friendly flow yoga class\"\n        },\n        {\n            \"id\": 2,\n            \"type\": \"Aerial Yoga\",\n            \"dayOfWeek\": \"Wednesday\",\n            \"timeOfDay\": \"2:00 PM\",\n            \"duration\": 90,\n            \"capacity\": 15,\n            \"price\": 25.00,\n            \"description\": \"Advanced aerial yoga session\"\n        }\n    ],\n    \"classes\": [\n        {\n            \"id\": 1,\n            \"courseId\": 1,\n            \"date\": \"October 30, 2024\",\n            \"teacher\": \"Sarah Johnson\",\n            \"comments\": \"Regular session\"\n        },\n        {\n            \"id\": 2,\n            \"courseId\": 1,\n            \"date\": \"November 6, 2024\",\n            \"teacher\": \"Sarah Johnson\",\n            \"comments\": \"Regular session\"\n        },\n        {\n            \"id\": 3,\n            \"courseId\": 2,\n            \"date\": \"October 30, 2024\",\n            \"teacher\": \"Emma Davis\",\n            \"comments\": \"Advanced techniques focus\"\n        }\n    ]\n}"
+              }
+          }
+      }
+  ]
+}
