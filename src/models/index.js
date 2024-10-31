@@ -15,15 +15,6 @@ const sequelize = new Sequelize({
 const Course = require('./course')(sequelize);
 const Class = require('./class')(sequelize);
 
-// Define relationships
-Course.hasMany(Class, {
-  foreignKey: 'courseId',
-  onDelete: 'CASCADE'
-});
-Class.belongsTo(Course, {
-  foreignKey: 'courseId'
-});
-
 module.exports = {
   sequelize,
   Course,

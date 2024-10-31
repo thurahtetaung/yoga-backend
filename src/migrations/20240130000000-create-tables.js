@@ -62,11 +62,6 @@ module.exports = {
             course_id: {
                 type: Sequelize.BIGINT,
                 allowNull: false,
-                references: {
-                    model: 'courses',
-                    key: 'id'
-                },
-                onDelete: 'CASCADE'
             },
             date: {
                 type: Sequelize.STRING,

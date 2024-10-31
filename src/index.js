@@ -2,36 +2,44 @@
 const express = require('express');
 const cors = require('cors');
 const { sequelize } = require('./models');
-// const routes = require('./routes');
 const syncRoutes = require('./routes/syncRoutes');
-// const errorHandler = require('./middleware/errorHandler');
 const logger = require('./utils/logger');
 const umzug = require('./config/umzug');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-// Middleware
+
 app.use(cors());
 app.use(express.json());
-
-// Routes
-// app.use('/api', routes);
 app.use('/api/sync', syncRoutes);
 
-// Error handling
-// app.use(errorHandler);
-
-// Database connection, migrations, and server startup
 async function startServer() {
   try {
     // Connect to database
     await sequelize.authenticate();
     logger.info('Database connection established successfully.');
 
-    // Run migrations
-    logger.info('Running migrations...');
-    await umzug.up();
-    logger.info('Migrations completed successfully.');
+    // Check pending migrations
+    const pending = await umzug.pending();
+
+    if (pending.length > 0) {
+      logger.info(`Found ${pending.length} pending migrations. Running migrations...`);
+
+      // Log each migration that will be run
+      pending.forEach(migration => {
+        logger.info(`- ${migration.name}`);
+      });
+
+      // Run migrations
+      await umzug.up();
+      logger.info('Migrations completed successfully.');
+    } else {
+      logger.info('No pending migrations found.');
+    }
+
+    // Optional: Log executed migrations
+    const executed = await umzug.executed();
+    logger.info(`Total executed migrations: ${executed.length}`);
 
     // Start server
     app.listen(PORT, () => {
